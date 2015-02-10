@@ -10,9 +10,10 @@ echo CERTS ...
 ls -l /certs/${JITSI_DOMAIN}.crt /certs/${JITSI_DOMAIN}.key
 
 ## real start script
-prosodyctl register focus auth.${JITSI_DOMAIN} ${FOCUS_SECRET}
+prosodyctl register focus auth.${JITSI_DOMAIN} "${FOCUS_SECRET}"
 prosodyctl restart
 service nginx restart
+./jvb.sh --host=localhost --domain=${JITSI_DOMAIN} --port=5347 --secret="${VIDEOBRIDGE_SECRET}" &
 ## end of real start script
 
 /bin/bash --login -i
