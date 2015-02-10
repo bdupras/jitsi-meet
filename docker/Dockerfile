@@ -9,6 +9,10 @@ RUN apt-get -qq update && \
       vim \
       locate \
       ca-certificates \
+      procps \
+      lsof \
+      net-tools \
+      netcat \
     && apt-get clean
 
 ## Install prosody and otalk modules
@@ -31,6 +35,10 @@ VOLUME ["/certs"]
 
 ## Configure prosody
 COPY conf/prosody.cfg.lua /etc/prosody/prosody.cfg.lua
+
+## Configure nginx
+COPY conf/nginx.conf /etc/nginx/nginx.conf
+EXPOSE 80
 
 RUN echo "alias ll='ls -la'" >> /root/.bashrc
 

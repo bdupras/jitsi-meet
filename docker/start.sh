@@ -12,6 +12,7 @@ ls -l /certs/${JITSI_DOMAIN}.crt /certs/${JITSI_DOMAIN}.key
 ## real start script
 prosodyctl register focus auth.${JITSI_DOMAIN} ${FOCUS_SECRET}
 prosodyctl restart
+service nginx restart
 ## end of real start script
 
 /bin/bash --login -i
