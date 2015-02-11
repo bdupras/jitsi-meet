@@ -13,7 +13,8 @@ ls -l /certs/${JITSI_DOMAIN}.crt /certs/${JITSI_DOMAIN}.key
 prosodyctl register focus auth.${JITSI_DOMAIN} "${FOCUS_SECRET}"
 prosodyctl restart
 service nginx restart
-./jvb.sh --host=localhost --domain=${JITSI_DOMAIN} --port=5347 --secret="${VIDEOBRIDGE_SECRET}" &
+/jitsi-videobridge-linux-*/jvb.sh --host=localhost --domain=${JITSI_DOMAIN} --port=5347 --secret="${VIDEOBRIDGE_SECRET}" &
+/jicofo/dist/linux/jicofo-linux-x64-1/jicofo.sh --domain=${JITSI_DOMAIN} --secret=${DOMAIN_SECRET} --user_domain=auth.${JITSI_DOMAIN} --user_name=focus --user_password=${FOCUS_SECRET} &
 ## end of real start script
 
 /bin/bash --login -i

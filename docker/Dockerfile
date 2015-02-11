@@ -23,7 +23,9 @@ RUN apt-get -qq update && \
       prosody-trunk \
       nginx \
       unzip \
-      default-jre \
+      ant \
+      openjdk-7-jre-headless \
+      openjdk-7-jdk \
     && apt-get clean
 
 ## Install otalk modules
@@ -43,13 +45,20 @@ COPY conf/nginx.conf /etc/nginx/nginx.conf
 EXPOSE 80
 
 ## Configure Jitsi-Videobridge
-RUN apt-get -y install unzip default-jre &&\
-    wget https://download.jitsi.org/jitsi-videobridge/linux/jitsi-videobridge-linux-x86-404.zip &&\
+RUN wget https://download.jitsi.org/jitsi-videobridge/linux/jitsi-videobridge-linux-x86-404.zip &&\
     unzip jitsi-videobridge-*.zip &&\
     rm jitsi-videobridge-*.zip &&\
     mkdir -p /root/.sip-communicator &&\
     echo "org.jitsi.impl.neomedia.transform.srtp.SRTPCryptoContext.checkReplay=false" > /root/.sip-communicator/sip-communicator.properties
 EXPOSE 5347
+
+## Configure jicofo
+RUN git clone https://github.com/jitsi/jicofo.git \
+    && cd jicofo \
+    && ant dist.lin64 \
+    && cd dist/linux/ \
+    && unzip jicofo-linux-*.zip \
+    && rm jicofo-linux-*.zip
 
 RUN echo "alias ll='ls -la'" >> /root/.bashrc
 
