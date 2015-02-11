@@ -60,6 +60,9 @@ RUN git clone https://github.com/jitsi/jicofo.git \
     && unzip jicofo-linux-*.zip \
     && rm jicofo-linux-*.zip
 
+## Configure jitsi-meet
+RUN git clone https://github.com/jitsi/jitsi-meet.git /srv/jitsi-meet
+
 RUN echo "alias ll='ls -la'" >> /root/.bashrc
 
 COPY start.sh /start.sh

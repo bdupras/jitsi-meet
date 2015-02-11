@@ -10,11 +10,24 @@ echo CERTS ...
 ls -l /certs/${JITSI_DOMAIN}.crt /certs/${JITSI_DOMAIN}.key
 
 ## real start script
+cat << EOF > /srv/jitsi-meet/config.js
+var config = {
+    hosts: {
+        domain: '${JITSI_DOMAIN}',
+        muc: 'conference.${JITSI_DOMAIN}',
+        bridge: 'jitsi-videobridge.${JITSI_DOMAIN}'
+    },
+    useNicks: false,
+    bosh: '/http-bind'
+};
+EOF
+
 prosodyctl register focus auth.${JITSI_DOMAIN} "${FOCUS_SECRET}"
 prosodyctl restart
 service nginx restart
 /jitsi-videobridge-linux-*/jvb.sh --host=localhost --domain=${JITSI_DOMAIN} --port=5347 --secret="${VIDEOBRIDGE_SECRET}" &
 /jicofo/dist/linux/jicofo-linux-x64-1/jicofo.sh --domain=${JITSI_DOMAIN} --secret=${DOMAIN_SECRET} --user_domain=auth.${JITSI_DOMAIN} --user_name=focus --user_password=${FOCUS_SECRET} &
+
 ## end of real start script
 
 /bin/bash --login -i
