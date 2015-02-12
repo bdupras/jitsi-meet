@@ -1,0 +1,33 @@
+#!/bin/bash -e
+docker run --name jitsitainer \
+           --rm -it \
+           -p 8080:80 \
+           -p 3478:3478 \
+           -p 10000:10000 \
+           -p 10001:10001 \
+           -p 10002:10002 \
+           -p 10003:10003 \
+           -p 10004:10004 \
+           -p 10005:10005 \
+           -p 10006:10006 \
+           -p 10007:10007 \
+           -p 10008:10008 \
+           -p 10009:10009 \
+           -p 10010:10010 \
+           -p 10011:10011 \
+           -p 10012:10012 \
+           -p 10013:10013 \
+           -p 10014:10014 \
+           -p 10015:10015 \
+           -p 10016:10016 \
+           -p 10017:10017 \
+           -p 10018:10018 \
+           -p 10019:10019 \
+           -e DOCKER_HOST_IP=$(boot2docker ip) \
+           -e JITSI_DOMAIN=ecovate.com \
+           -e VIDEOBRIDGE_SECRET=password1 \
+           -e DOMAIN_SECRET=password2 \
+           -e FOCUS_SECRET=password3 \
+           -e TURN_SECRET=password4 \
+           -v ${HOME}/projects/ssl:/certs \
+           spike/jitsitainer

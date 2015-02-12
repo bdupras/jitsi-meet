@@ -52,6 +52,8 @@ log = {
   "*syslog";
 }
 
+http_default_host = (os.getenv("JITSI_DOMAIN"))
+
 VirtualHost (os.getenv("JITSI_DOMAIN"))
   authentication = "anonymous"
   ssl = {
