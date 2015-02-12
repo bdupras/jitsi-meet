@@ -1,4 +1,10 @@
 #!/bin/bash -e
+# XMPP_DOMAIN=$(boot2docker ip)
+XMPP_DOMAIN=ecovate.com
+XMPP_SECRET=password2
+JICOFO_AUTH_PASSWORD=password3
+XMPP_PORT=5347
+
 docker run --name jitsitainer \
            --rm -it \
            -p 8080:80 \
@@ -23,11 +29,17 @@ docker run --name jitsitainer \
            -p 10017:10017 \
            -p 10018:10018 \
            -p 10019:10019 \
-           -e DOCKER_HOST_IP=$(boot2docker ip) \
-           -e JITSI_DOMAIN=ecovate.com \
-           -e VIDEOBRIDGE_SECRET=password1 \
-           -e DOMAIN_SECRET=password2 \
-           -e FOCUS_SECRET=password3 \
-           -e TURN_SECRET=password4 \
+           -e JITSI_DOMAIN=${XMPP_DOMAIN} \
+           -e JVB_HOSTNAME=${XMPP_DOMAIN} \
+           -e JVB_SECRET=${XMPP_SECRET} \
+           -e JVB_PORT=${XMPP_PORT} \
+           -e JVB_OPTS="--min-port=10000 --max-port=10019" \
+           -e JICOFO_SECRET=${XMPP_SECRET} \
+           -e JICOFO_PORT=${XMPP_PORT} \
+           -e JICOFO_HOSTNAME=${XMPP_DOMAIN} \
+           -e JICOFO_AUTH_DOMAIN=auth.${XMPP_DOMAIN} \
+           -e JICOFO_AUTH_PASSWORD=${JICOFO_AUTH_PASSWORD} \
+           -e JICOFO_OPTS="--user_name=focus" \
+           -e XMPP_SECRET=${XMPP_SECRET} \
            -v ${HOME}/projects/ssl:/certs \
            spike/jitsitainer

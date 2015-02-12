@@ -71,7 +71,7 @@ VirtualHost ("auth." .. os.getenv("JITSI_DOMAIN") )
 Component ("conference." .. os.getenv("JITSI_DOMAIN")) "muc"
 
 Component ("jitsi-videobridge." .. os.getenv("JITSI_DOMAIN"))
-    component_secret = os.getenv("VIDEOBRIDGE_SECRET")
+    component_secret = os.getenv("JVB_SECRET")
 
 Component ("focus." .. os.getenv("JITSI_DOMAIN"))
-    component_secret = os.getenv("DOMAIN_SECRET")
+    component_secret = os.getenv("XMPP_SECRET")
